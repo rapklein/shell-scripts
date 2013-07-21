@@ -19,20 +19,19 @@
 #
 # title                 Project Open update script for EDCS
 # description           This script will update Project-Open on CentOS / RHEL
-#			version 6.4
+#                       version 6.4
 # author                rapha@iworkspace.org
 # date                  20130615
 # last modified         20130722
 # version               0.1
 # usage                 Usually via EDCS: 'bash edcs.sh', or direcly via
-#			'bash example.sh'
+#                       'bash example.sh'
 # notes
 # ----------------------------------------------------------------------------
 
 # VARIABLES ------------------------------------------------------------------
 TITLE="Project Open Update"
 DESCRIPTION="Update script for  ProjectOpen (CentOS 6.4)"
-SHOWEXPLANATIONS=1
 
 # LOCAL FAILSAFE CONFIGURATION -----------------------------------------------
 # This is allows this script to run separately, without the need for edcs.sh.
@@ -68,6 +67,8 @@ while getopts "td" opt; do	#allowed arguments and options
 done
 
 # MAIN SCRIPT ----------------------------------------------------------------
+
+echo "[$(date --rfc-3339=seconds)] Running update"
 su -c '/sbin/chkconfig --level 345 yum on; /sbin/service yum start'
 
 #Exit the script w/o error code, if it was not called via edcs.sh

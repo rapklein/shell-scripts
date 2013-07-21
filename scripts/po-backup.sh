@@ -19,21 +19,21 @@
 #
 # title                 Project Open backup script for EDCS
 # description           This script will backup Project-Open on CentOS / RHEL
-#			version 6.4
+#                       version 6.4
 # author                rapha@iworkspace.org
 # date                  20130615
 # last modified         20130722
 # version               0.1
 # usage                 Usually via EDCS: 'bash edcs.sh', or direcly via
-#			'bash example.sh'
+#                       'bash example.sh'
 # notes
 # ----------------------------------------------------------------------------
 
 # VARIABLES ------------------------------------------------------------------
 TITLE="Project Open Setup"
 DESCRIPTION="Backup ProjectOpen (CentOS 6.4)"
-PODIR=/web/projop/www               
-BACKUPDIR=/web/projop/backup
+PODIR="/web/projop/www"
+BACKUPDIR="/web/projop/backup"
 
 # LOCAL FAILSAFE CONFIGURATION -----------------------------------------------
 # This is allows this script to run separately, without the need for edcs.sh.
@@ -69,8 +69,11 @@ while getopts "td" opt; do	#allowed arguments and options
 done
 
 # MAIN SCRIPT ----------------------------------------------------------------
+
+echo "[$(date --rfc-3339=seconds)] Running ]po[ backup script..."
+
 TIMESTAMP=$(date +%A)
- 
+
 DBDUMP="$BACKUPDIR/podb-$TIMESTAMP.sql.gz"
 FILEDUMP="$BACKUPDIR/pobackup-$TIMESTAMP.files.tgz"
 
@@ -79,22 +82,23 @@ echo "Assuming $BACKUPDIR as Backup-Target"
 
 read -p "[$(date --rfc-3339=seconds)] Is everything correct? (Y/n) " -n 1 -r
 if [[ $REPLY = "Y" || $REPLY = "y" || $REPLY = "" ]]
-	then
-	echo
-	echo "creating database dump $DBDUMP..."
-	pg_dump projop> db_backup | gzip > "$DBDUMP" || exit $?
+        then
+        echo
+        echo "creating database dump $DBDUMP..."
+        pg_dump projop> db_backup | gzip > "$DBDUMP" || exit $?
 
-	echo
-	echo "creating file archive $FILEDUMP..."
-	cd "$PODIR"
-	tar --exclude .svn -zcf "$FILEDUMP" . || exit $?
+        echo
+        echo "creating file archive $FILEDUMP..."
+        cd "$PODIR"
+        tar --exclude .svn -zcf "$FILEDUMP" . || exit $?
 
-	echo
-	echo "Done!"
-	echo "Files to copy to a safe place: $DBDUMP, $FILEDUMP"
+        echo
+        echo "Done!"
+        echo "Files to copy to a safe place: $DBDUMP, $FILEDUMP"
 else
-	echo "Aborting..."
+        echo "Aborting..."
 fi
+
 
 #Exit the script w/o error code, if it was not called via edcs.sh
 if [ -z "${SCRIPTS_FOLDER}" ]; then
