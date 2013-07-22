@@ -67,7 +67,7 @@ function checkdependencies {
 			fi
 		# OpenSuse, Mandriva, Fedora, CentOs, ecc. (with rpm)
 		elif which rpm &> /dev/null; then
-			if [[ ! $(rpm -q ${DEPENDENCIES[$i]}) ]]; then
+			if [[ $(rpm -q ${DEPENDENCIES[$i]} | grep -w "not installed") ]]; then
 				PKGSTOINSTALL=$PKGSTOINSTALL" "${DEPENDENCIES[$i]}
 			fi
 		# ArchLinux (with pacman)
