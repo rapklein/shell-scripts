@@ -54,6 +54,7 @@ function checkoperatingsystem {
 function checkdependencies {
 	# Check dependencies
 	# Source: http://www.mirkopagliai.it/bash-scripting-check-for-and-install-missing-dependencies/
+	DEPENDENCIES=""
 
 	IFS=' ' read -a DEPENDENCIES <<< "${1}"
 	echo "Checking the following dependencies:"
@@ -62,7 +63,7 @@ function checkdependencies {
 
 	# What dependencies are missing?
 	PKGSTOINSTALL=""
-	for (( i=0; i<${tLen=${#DEPENDENCIES[@]}}; i++ )); do
+	for (( i=0; i<${#DEPENDENCIES[@]}; i++ )); do
 		# Debian, Ubuntu and derivatives (with dpkg)
 			if which dpkg &> /dev/null; then
 			if [[ ! $(dpkg -l | grep -w "ii  ${DEPENDENCIES[$i]} ") ]]; then
