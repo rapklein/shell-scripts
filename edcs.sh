@@ -151,7 +151,7 @@ do
 done
 
 checkoperatingsystem "Ubuntu|Debian|Linux"	#Ubuntu, Debian, Linux (CentOS)
-checkdependencies "whiptail dialog"
+checkdependencies "whiptail dialog nano"
 
 while true
 do
