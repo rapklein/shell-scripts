@@ -77,7 +77,7 @@ clear
 if [ $RESULT = 0 ]
 then
 	# check dependencies
-	if [ SHOWEXPLANATIONS = 1 ]
+	if [ $SHOWEXPLANATIONS = 1 ]
 	then
 		dialog --title "Check dependencies" --msgbox "Necessary dependencies will be checked and you will be prompted to install them if necessary." 20 78
 		clear
@@ -85,7 +85,7 @@ then
 	checkdependencies "cvs wget gcc nano redhat-lsb libXaw expat expat-devel pango graphviz-devel ImageMagick libdbi-dbd-pgsql openldap-clients openldap-devel perl-YAML openoffice.org-impress openoffice.org-writer openoffice.org-headless postgresql postgresql-server postgresql-contrib postgresql-devel postgresql-docs"
 	checkoperatingsystem "Linux"
 	# Download Required Files
-	if [ SHOWEXPLANATIONS = 1 ]
+	if [ $SHOWEXPLANATIONS = 1 ]
 	then
 		dialog --title "Download Required Files" --msgbox "Some required files will be downloaded from sourceforge." 20 78
 		clear
@@ -94,7 +94,7 @@ then
 	wget http://sourceforge.net/projects/project-open/files/project-open/Support%20Files/aolserver451rc2-po2.nsreturnz.el6.x86_64.tgz -O /usr/src/aolserver451rc2-po2.nsreturnz.el6.x86_64.tgz
 	wget http://sourceforge.net/projects/project-open/files/project-open/Support%20Files/web_projop-aux-files.4.0.4.0.0.tgz -O /usr/src/web_projop-aux-files.4.0.4.0.0.tgz
 	wget http://sourceforge.net/projects/project-open/files/project-open/V4.0/project-open-Update-4.0.4.0.0.tgz -O /usr/src/project-open-Update-4.0.4.0.0.tgz
-	if [ SHOWEXPLANATIONS = 1 ]
+	if [ $SHOWEXPLANATIONS = 1 ]
 	then
 		dialog --title "Prerequisites" --msgbox "The installation will be prepared:\n\n * A new group will be created\n * A new user will be created\n * The downloads will be extracted\n * The ownership of the files will be amended" 20 78
 		clear
@@ -116,13 +116,13 @@ then
 	# extract the AOLserver binary
 	tar xzf /usr/src/aolserver451rc2-po2.nsreturnz.el6.x86_64.tgz
 	# Initialize the database
-	if [ SHOWEXPLANATIONS = 1 ]
+	if [ $SHOWEXPLANATIONS = 1 ]
 	then
 		dialog --title "Database setup" --msgbox "The database will be initialized." 20 78
 		clear
 	fi
 	/etc/init.d/postgresql initdb
-	if [ SHOWEXPLANATIONS = 1 ]
+	if [ $SHOWEXPLANATIONS = 1 ]
 	then
 		dialog --title "ProjectOpen Install Wizard (CentOS 6.4) - Postgres" --msgbox "Now please edit the file /var/lib/pgsql/data/postgresql.conf, search for the following parameters and set the values accordingly (don't forget to remove the comments):\n\n add_missing_from = on \n regex_flavor = extended \n default_with_oids = on" 20 78
 		clear
@@ -145,7 +145,7 @@ then
 	echo "[$(date --rfc-3339=seconds)] Please check that the database dump has loaded correctly:"
 	su - projop -c "psql -c 'select count(*) from users'"
 	read -sn 1 -p "$(echo $'\n')[$(date --rfc-3339=seconds)] The database should reply with \"196\". Press any key to continue..."
-	if [ SHOWEXPLANATIONS = 1 ]
+	if [ $SHOWEXPLANATIONS = 1 ]
 	then
 		dialog --title "ProjectOpen Install Wizard (CentOS 6.4) - Postgres" --msgbox "Please modify /web/projop/etc/config.tcl for the following parameters:\n\n set servername   \"<your_company> \]project-open\[ Server\"\n set homedir      /usr/local/aolserver451_rc2\n\nYou may modify 'httpport' as well." 20 78
 		clear
