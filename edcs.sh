@@ -56,6 +56,9 @@ function checkdependencies {
 	# Source: http://www.mirkopagliai.it/bash-scripting-check-for-and-install-missing-dependencies/
 
 	IFS=' ' read -a DEPENDENCIES <<< "${1}"
+	echo "Checking the following dependencies:"
+	echo ${DEPENDENCIES[@]}
+	read -p "Press [Enter] to continue..."
 
 	# What dependencies are missing?
 	PKGSTOINSTALL=""
@@ -80,6 +83,9 @@ function checkdependencies {
 			PKGSTOINSTALL=$PKGSTOINSTALL" "${DEPENDENCIES[$i]}
 		fi
 	done
+
+	echo "Found the following missing packages: $PKGSTOINSTALL"
+	read -p "Press [Enter] to continue..."
 
 	# If some dependencies are missing, asks if user wants to install
 	if [ "$PKGSTOINSTALL" != "" ]; then
