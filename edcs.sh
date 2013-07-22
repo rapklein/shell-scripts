@@ -57,7 +57,7 @@ function checkdependencies {
 	DEPENDENCIES=""
 
 	IFS=' ' read -a DEPENDENCIES <<< "${1}"
-	echo "Checking the following dependencies:"
+	echo "Checking the following ${#DEPENDENCIES[@]} dependencies:"
 	echo ${DEPENDENCIES[@]}
 	read -p "Press [Enter] to continue..."
 
